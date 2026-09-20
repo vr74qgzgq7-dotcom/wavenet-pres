@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavenet — Network Intelligence for iOS & macOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0B0D10;
+            --surface-color: #12161D;
+            --border-color: rgba(0, 255, 204, 0.15);
+            --accent-cyan: #00FFCC;
+            --accent-blue: #3A86FF;
+            --text-main: #E2E8F0;
+            --text-dim: #8892B0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 13, 16, 0.85);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: -0.05em;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--text-dim);
+        }
+
+        nav a {
+            color: var(--text-dim);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.85rem;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0 4rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            color: #FFFFFF;
+        }
+
+        .hero h1 span {
+            color: var(--accent-cyan);
+        }
+
+        .hero p {
+            font-size: 1rem;
+            color: var(--text-dim);
+            max-width: 650px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        /* Telemetry Terminal Widget Styles */
+        .terminal-box {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            text-align: left;
+            margin-top: 3rem;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            background: rgba(0, 255, 204, 0.05);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+        }
+
+        .dot:nth-child(1) { background: #FF5F56; }
+        .dot:nth-child(2) { background: #FFBD2E; }
+        .dot:nth-child(3) { background: #27C93F; }
+
+        .terminal-body {
+            padding: 1.25rem;
+            font-size: 0.8rem;
+            height: 180px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .log-line {
+            margin-bottom: 0.4rem;
+            color: var(--text-dim);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .log-line .timestamp {
+            color: #56657F;
+        }
+
+        .log-line .highlight {
+            color: var(--accent-cyan);
+        }
+
+        .log-line .status-ok {
+            color: #27C93F;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid var(--accent-cyan);
+            padding: 0.8rem 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+        }
+
+        section {
+            padding: 5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #FFFFFF;
+            letter-spacing: -0.02em;
+        }
+
+        section h2::before {
+            content: "// ";
+            color: var(--accent-cyan);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            position: relative;
+        }
+
+        .feature-card h3 {
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        .spec-list {
+            list-style: none;
+        }
+
+        .spec-list li {
+            padding: 1rem 0;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+        }
+
+        .spec-list li span:first-child {
+            color: var(--text-dim);
+        }
+
+        .spec-list li span:last-child {
+            color: var(--text-main);
+            font-weight: 700;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            main {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">WAVENET<span>//OS</span></a>
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#features">Architecture</a>
+            <a href="#specs">System Specs</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="hero" id="overview">
+            <h1>Absolute visibility. <span>Zero trust.</span></h1>
+            <p>Wavenet is a local-first network intelligence and state vector analyzer engineered for macOS and iOS. Correlate weak signals, connection telemetry, and system behavior on-device.</p>
+            <a href="#features" class="cta-btn">EXPLORE PLATFORM</a>
+
+            <!-- Simulated Telemetry Readout Widget -->
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <div class="terminal-dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                    <span>wavenetd // telemetry-stream --active</span>
+                    <span>[LOCAL]</span>
+                </div>
+                <div class="terminal-body" id="terminal-logs">
+                    <div class="log-line"><span class="timestamp">[11:55:01]</span> <span>Initializing local evidence model...</span> <span class="status-ok">OK</span></div>
+                    <div class="log-line"><span class="timestamp">[11:55:02]</span> <span>Analyzing state vector matrix...</span> <span class="highlight">STABLE</span></div>
+                    <div class="log-line"><span class="timestamp">[11:55:03]</span> <span>Zero telemetry egress verified.</span> <span class="status-ok">SECURE</span></div>
+                </div>
+            </div>
+        </div>
+
+        <section id="features">
+            <h2>Core Capabilities</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Local-First Telemetry</h3>
+                    <p>All data analysis and verification run directly on your hardware. No cloud relays, no telemetry logging, and zero corporate intermediaries.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Deterministic Policies</h3>
+                    <p>Enforce strict, verifiable protection rules and packet filters backed by transparent evidence models rather than opaque AI decisions.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>SwiftUI Cockpit</h3>
+                    <p>A native high-density interface built explicitly for macOS and iOS. Low latency, hardware-accelerated rendering, and a zero-bloat aesthetic.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="specs">
+            <h2>Platform Architecture</h2>
+            <ul class="spec-list">
+                <li><span>Target Operating Systems</span><span>iOS / macOS</span></li>
+                <li><span>Core Processing Pipeline</span><span>Native Swift & Low-Level Transport Layer</span></li>
+                <li><span>Data Storage Model</span><span>Local Encrypted State Vector</span></li>
+                <li><span>Audit Compliance</span><span>Fully Open-Source Attributed Dependency Stack</span></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Wavenet Project. All rights reserved. Built for secure operational environments.</p>
+    </footer>
+
+    <script>
+        // Simulated live terminal output ticker
+        const logsContainer = document.getElementById('terminal-logs');
+        const simulatedEvents = [
+            { text: "Scanning interface metrics...", status: "OK", class: "status-ok" },
+            { text: "Verifying local transport layer signatures...", status: "PASSED", class: "status-ok" },
+            { text: "Evaluating deterministic security rules...", status: "OPTIMAL", class: "highlight" },
+            { text: "Correlating weak signal stream...", status: "SYNCED", class: "status-ok" },
+            { text: "Zero-leak isolation matrix enforced.", status: "SECURE", class: "status-ok" }
+        ];
+
+        let eventIndex = 0;
+
+        function appendLog() {
+            const now = new Date();
+            const timeString = `[${now.toTimeString().split(' ')[0]}]`;
+            const event = simulatedEvents[eventIndex];
+            
+            const line = document.createElement('div');
+            line.className = 'log-line';
+            line.innerHTML = `<span class="timestamp">${timeString}</span> <span>${event.text}</span> <span class="${event.class}">${event.status}</span>`;
+            
+            logsContainer.appendChild(line);
+            
+            // Keep max 4 lines visible to prevent overflow
+            if (logsContainer.children.length > 4) {
+                logsContainer.removeChild(logsContainer.children[0]);
+            }
+            
+            eventIndex = (eventIndex + 1) % simulatedEvents.length;
+        }
+
+        setInterval(appendLog, 3000);
+    </script>
+
+</body>
+</html>
