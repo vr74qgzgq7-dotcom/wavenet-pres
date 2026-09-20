@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wavenet — Network Intelligence for iOS & macOS</title>
+    <title>Wavenet — Local-First Network Intelligence & Privacy Cockpit</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -100,7 +100,6 @@
             margin: 0 auto 2.5rem auto;
         }
 
-        /* Telemetry Terminal Widget Styles */
         .terminal-box {
             background: var(--surface-color);
             border: 1px solid var(--border-color);
@@ -229,13 +228,23 @@
             color: var(--text-dim);
         }
 
+        .quote-box {
+            background: var(--surface-color);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
         .spec-list {
             list-style: none;
         }
 
         .spec-list li {
             padding: 1rem 0;
-            border-bottom: 1px dashed var(--border-color);
+            border-bottom: 1.5px dashed var(--border-color);
             display: flex;
             justify-content: space-between;
             font-size: 0.85rem;
@@ -248,6 +257,8 @@
         .spec-list li span:last-child {
             color: var(--text-main);
             font-weight: 700;
+            text-align: right;
+            max-width: 50%;
         }
 
         footer {
@@ -273,18 +284,17 @@
         <a href="#" class="logo">WAVENET<span>//OS</span></a>
         <nav>
             <a href="#overview">Overview</a>
-            <a href="#features">Architecture</a>
-            <a href="#specs">System Specs</a>
+            <a href="#architecture">Pipeline</a>
+            <a href="#specs">Specifications</a>
         </nav>
     </header>
 
     <main>
         <div class="hero" id="overview">
             <h1>Absolute visibility. <span>Zero trust.</span></h1>
-            <p>Wavenet is a local-first network intelligence and state vector analyzer engineered for macOS and iOS. Correlate weak signals, connection telemetry, and system behavior on-device.</p>
-            <a href="#features" class="cta-btn">EXPLORE PLATFORM</a>
+            <p>A local-first network intelligence and privacy-control cockpit for macOS and iOS. Combining typed evidence, deterministic security policies, and an embedded Rust Tor transport.</p>
+            <a href="#architecture" class="cta-btn">EXPLORE ARCHITECTURE</a>
 
-            <!-- Simulated Telemetry Readout Widget -->
             <div class="terminal-box">
                 <div class="terminal-header">
                     <div class="terminal-dots">
@@ -292,59 +302,71 @@
                         <div class="dot"></div>
                         <div class="dot"></div>
                     </div>
-                    <span>wavenetd // telemetry-stream --active</span>
+                    <span>wavenetd // evidence-ledger --active</span>
                     <span>[LOCAL]</span>
                 </div>
                 <div class="terminal-body" id="terminal-logs">
-                    <div class="log-line"><span class="timestamp">[11:55:01]</span> <span>Initializing local evidence model...</span> <span class="status-ok">OK</span></div>
-                    <div class="log-line"><span class="timestamp">[11:55:02]</span> <span>Analyzing state vector matrix...</span> <span class="highlight">STABLE</span></div>
-                    <div class="log-line"><span class="timestamp">[11:55:03]</span> <span>Zero telemetry egress verified.</span> <span class="status-ok">SECURE</span></div>
+                    <div class="log-line"><span class="timestamp">[12:00:01]</span> <span>Evaluating evidence provenance models...</span> <span class="status-ok">VERIFIED</span></div>
+                    <div class="log-line"><span class="timestamp">[12:00:02]</span> <span>Checking deterministic protection policies...</span> <span class="highlight">ACTIVE</span></div>
+                    <div class="log-line"><span class="timestamp">[12:00:03]</span> <span>Zero telemetry egress & fail-closed states secure.</span> <span class="status-ok">OK</span></div>
                 </div>
             </div>
         </div>
 
-        <section id="features">
-            <h2>Core Capabilities</h2>
+        <div class="quote-box">
+            &ldquo;Wavenet should show what it observed, how reliable that observation is, what it cannot see, and which action—if any—is actually available.&rdquo;
+        </div>
+
+        <section id="architecture">
+            <h2>The Five-Stage Product Model</h2>
             <div class="features-grid">
                 <div class="feature-card">
-                    <h3>Local-First Telemetry</h3>
-                    <p>All data analysis and verification run directly on your hardware. No cloud relays, no telemetry logging, and zero corporate intermediaries.</p>
+                    <h3>1. Observe</h3>
+                    <p>Collect raw local network signals, DNS metadata, and host endpoint context safely when exposed by the operating system.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>Deterministic Policies</h3>
-                    <p>Enforce strict, verifiable protection rules and packet filters backed by transparent evidence models rather than opaque AI decisions.</p>
+                    <h3>2. Normalize</h3>
+                    <p>Convert disparate measurements into typed, bounded evidence objects with full provenance and coverage ceilings.</p>
                 </div>
                 <div class="feature-card">
-                    <h3>SwiftUI Cockpit</h3>
-                    <p>A native high-density interface built explicitly for macOS and iOS. Low latency, hardware-accelerated rendering, and a zero-bloat aesthetic.</p>
+                    <h3>3. Interpret</h3>
+                    <p>Run local feature analysis, personal behavioral baselines, and anomaly detectors without relying on cloud-based heuristics.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>4. Control</h3>
+                    <p>Compile and apply explicit, reversible, deterministic protection rules across DNS, URL, and browser-policy surfaces.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>5. Explain</h3>
+                    <p>Expose confidence ratings, data limitations, and failure states transparently through a native SwiftUI operator cockpit.</p>
                 </div>
             </div>
         </section>
 
         <section id="specs">
-            <h2>Platform Architecture</h2>
+            <h2>System Specifications</h2>
             <ul class="spec-list">
-                <li><span>Target Operating Systems</span><span>iOS / macOS</span></li>
-                <li><span>Core Processing Pipeline</span><span>Native Swift & Low-Level Transport Layer</span></li>
-                <li><span>Data Storage Model</span><span>Local Encrypted State Vector</span></li>
-                <li><span>Audit Compliance</span><span>Fully Open-Source Attributed Dependency Stack</span></li>
+                <li><span>Target Platforms</span><span>macOS & iOS Native SwiftUI Cockpit</span></li>
+                <li><span>Core Architecture</span><span>Local-First Swift 6 Core + Embedded Rust Arti Transport</span></li>
+                <li><span>Privacy Transport</span><span>App-Scoped Direct or Pinned Tor Mode (Fail-Closed)</span></li>
+                <li><span>Evidence Security</span><span>ChaChaPoly Encrypted Local Ledger with Platform Key</span></li>
+                <li><span>Analysis Model</span><span>Statistical Baselines, Isolation Forests, & Attack Hypotheses</span></li>
+                <li><span>Cloud Boundary</span><span>Optional Authenticated Supabase / Edge Functions (Zero Telemetry Leak)</span></li>
             </ul>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Wavenet Project. All rights reserved. Built for secure operational environments.</p>
+        <p>&copy; 2026 Wavenet Project. Built for operator-grade visibility and absolute transparency.</p>
     </footer>
 
     <script>
-        // Simulated live terminal output ticker
         const logsContainer = document.getElementById('terminal-logs');
         const simulatedEvents = [
-            { text: "Scanning interface metrics...", status: "OK", class: "status-ok" },
-            { text: "Verifying local transport layer signatures...", status: "PASSED", class: "status-ok" },
-            { text: "Evaluating deterministic security rules...", status: "OPTIMAL", class: "highlight" },
-            { text: "Correlating weak signal stream...", status: "SYNCED", class: "status-ok" },
-            { text: "Zero-leak isolation matrix enforced.", status: "SECURE", class: "status-ok" }
+            { text: "Verifying privacy transport state bindings...", status: "SYNCED", class: "status-ok" },
+            { text: "Analyzing network baseline drift vectors...", status: "STABLE", class: "status-ok" },
+            { text: "Inspecting deterministic policy compiler output...", status: "VALID", class: "highlight" },
+            { text: "FlightRecorder audit chain hash verified.", status: "SECURE", class: "status-ok" }
         ];
 
         let eventIndex = 0;
@@ -360,7 +382,6 @@
             
             logsContainer.appendChild(line);
             
-            // Keep max 4 lines visible to prevent overflow
             if (logsContainer.children.length > 4) {
                 logsContainer.removeChild(logsContainer.children[0]);
             }
@@ -368,7 +389,7 @@
             eventIndex = (eventIndex + 1) % simulatedEvents.length;
         }
 
-        setInterval(appendLog, 3000);
+        setInterval(appendLog, 3500);
     </script>
 
 </body>
